@@ -38,7 +38,11 @@ async function registerUser(req, res) {
             expiresIn: "3d"
         })
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    })
 
     return res.status(201).json({
         message: "User registered successfully",
@@ -81,7 +85,11 @@ async function loginUser(req, res) {
         expiresIn: "3d"
     })
 
-    res.cookie('token', token)
+        res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    })
 
     res.status(200).json({
         message: "User logged in successfully.",
@@ -107,9 +115,13 @@ async function getMe(req, res) {
 async function logout(req, res) {
     const token = req.cookies.token
 
-    res.clearCookie("token")
+    res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+})
 
-    await redis.set(token, Date.now().toString(),"EX",60*60)
+    await redis.set(token, Date.now().toString(), "EX", 60 * 60)
 
     res.status(200).json({
         message: "Logout Successfully."
