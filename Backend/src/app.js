@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "https://jazzy-mermaid-c9f73c.netlify.app",
+    origin: "https://polite-beijinho-e4ef8d.netlify.app",
     credentials: true
 }));
 
